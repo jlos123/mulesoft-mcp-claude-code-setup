@@ -1,4 +1,4 @@
-# MuleSoft MCP Server Setup
+# Install MuleSoft MCP Server for Claude Code
 
 ## Steps
 
