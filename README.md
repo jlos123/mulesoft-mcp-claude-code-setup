@@ -23,7 +23,7 @@
    Replace `client-id` and `client-secret` in the command below and run in terminal. This will install it for use at the user level across all projects.
    
    ```bash
-   claude mcp add-json mulesoft-mcp -s user '{"command":"npx","args":["-y","@mulesoft/mcp-server","start"],"env":{"ANYPOINT_CLIENT_ID":"**<replace-with-client-id>**","ANYPOINT_CLIENT_SECRET":"**<replace-with-client-secret>**","ANYPOINT_REGION":"PROD_US"}}'
+   claude mcp add-json mulesoft-mcp -s user '{"command":"npx","args":["-y","@mulesoft/mcp-server","start"],"env":{"ANYPOINT_CLIENT_ID":"replace_with_your_client_id","ANYPOINT_CLIENT_SECRET":"replace_with_your_client_secret","ANYPOINT_REGION":"PROD_US"}}'
    ```
    
    For different scopes available, see the documentation: https://docs.anthropic.com/en/docs/claude-code/mcp#choosing-the-right-scope
