@@ -1,12 +1,7 @@
 # Install MuleSoft MCP Server for Claude Code
 
 ## Steps
-
-1. **Install Claude Code**
-   
-   Follow the installation guide: https://docs.anthropic.com/en/docs/claude-code/overview
-
-2. **Install MuleSoft MCP Server**
+1. **Install MuleSoft MCP Server**
    
    Check the requirements here: https://www.npmjs.com/package/@mulesoft/mcp-server
    
@@ -17,6 +12,12 @@
       ```bash
       npm install -g @mulesoft/mcp-server
       ```
+
+2. **Install Claude Code**
+   
+   Follow the installation guide: https://docs.anthropic.com/en/docs/claude-code/overview
+
+
 
 3. **Configure Claude Code to Access Mule MCP Server**
    
