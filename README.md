@@ -28,3 +28,8 @@
    ```
    
    For different scopes available, see the documentation: https://docs.anthropic.com/en/docs/claude-code/mcp#choosing-the-right-scope
+
+
+# Additional Resources
+
+Claude Code tutorial - https://www.youtube.com/watch?v=cYIxhL6pxL4&ab_channel=RobShocks
