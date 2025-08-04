@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuleSoft Platform Health Check Report</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            border-left: 5px solid #667eea;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        .metric-label {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .app-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .app-table th, .app-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .app-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        .app-table tr:hover {
+            background: #f5f5f5;
+        }
+        .status-running {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        .status-stopped {
+            background: #dc3545;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        .alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .alert-danger {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .performance-chart {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .chart-label {
+            width: 150px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .chart-progress {
+            flex: 1;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 10px;
+        }
+        .chart-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        .chart-value {
+            font-weight: bold;
+            color: #333;
+            min-width: 60px;
+        }
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .summary-box h3 {
+            margin-top: 0;
+        }
+        .timestamp {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 MuleSoft Platform Health Check</h1>
+            <p>Comprehensive Platform Analysis Report - Generated on August 4, 2025</p>
+        </div>
+        
+        <div class="content">
+            <!-- Executive Summary -->
+            <div class="section">
+                <h2>📊 Executive Summary</h2>
+                <div class="summary-box">
+                    <h3>Platform Overview</h3>
+                    <p><strong>Environment:</strong> [ORGANIZATION] - Sandbox Environment</p>
+                    <p><strong>Total Applications:</strong> 10 deployed (7 running, 3 stopped)</p>
+                    <p><strong>Runtime Version:</strong> Mule 4.9.7:23e-java17</p>
+                    <p><strong>Deployment Target:</strong> CloudHub 2.0 (Multi-Region)</p>
+                    <p><strong>Health Status:</strong> ⚠️ Some applications require attention</p>
+                </div>
+            </div>
+
+            <!-- Key Performance Metrics -->
+            <div class="section">
+                <h2>📈 Key Performance Metrics (Last 7 Days)</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">22,340</div>
+                        <div class="metric-label">Total API Calls</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">3,165</div>
+                        <div class="metric-label">Error Count</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">13,472</div>
+                        <div class="metric-label">Total Messages</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">22</div>
+                        <div class="metric-label">Total Flows</div>
+                    </div>
+                </div>
+
+                <div class="alert alert-danger">
+                    <strong>⚠️ High Error Rate Alert:</strong> The reservations-monitoring-example application has a 14.2% error rate (3,165 errors out of 22,340 requests). This requires immediate attention.
+                </div>
+
+                <div class="performance-chart">
+                    <h3>Application Performance Overview</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">reservations-monitoring-example</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 85%"></div>
+                        </div>
+                        <div class="chart-value">29.2ms avg latency</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">pricing-api</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 40%"></div>
+                        </div>
+                        <div class="chart-value">78.8ms avg latency</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Application Status -->
+            <div class="section">
+                <h2>🖥️ Application Deployment Status</h2>
+                <table class="app-table">
+                    <thead>
+                        <tr>
+                            <th>Application Name</th>
+                            <th>Status</th>
+                            <th>Runtime Version</th>
+                            <th>Target Location</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>reservations-monitoring-example</td>
+                            <td><span class="status-running">RUNNING</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region A</td>
+                            <td>Aug 1, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>pricing-api</td>
+                            <td><span class="status-running">RUNNING</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 31, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>chain-llm-powered-data-ingestion</td>
+                            <td><span class="status-running">RUNNING</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>mq-claims-agent</td>
+                            <td><span class="status-running">RUNNING</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>slackv2</td>
+                            <td><span class="status-running">RUNNING</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>rev-mgmt-api-impl</td>
+                            <td><span class="status-running">RUNNING</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>revenue-management-v2-attempt2</td>
+                            <td><span class="status-running">RUNNING</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>mcp-b2b-apm-test</td>
+                            <td><span class="status-stopped">STOPPED</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>reset-payment-demo-db</td>
+                            <td><span class="status-stopped">STOPPED</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>tms-proxy</td>
+                            <td><span class="status-stopped">STOPPED</span></td>
+                            <td>4.9.7:23e-java17</td>
+                            <td>Region B</td>
+                            <td>Jul 26, 2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Resource Utilization -->
+            <div class="section">
+                <h2>💾 Resource Utilization Analysis</h2>
+                <div class="performance-chart">
+                    <h3>CPU Utilization (Last 15 Days)</h3>
+                    <div class="alert alert-success">
+                        <strong>✅ CPU Performance:</strong> All running applications maintain healthy CPU usage (2-21% average), well below recommended thresholds.
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">reservations-monitoring-example</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 8%"></div>
+                        </div>
+                        <div class="chart-value">4% avg</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">pricing-api</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 6%"></div>
+                        </div>
+                        <div class="chart-value">3% avg</div>
+                    </div>
+                </div>
+
+                <div class="performance-chart">
+                    <h3>Memory Utilization (Heap Usage)</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">reservations-monitoring-example</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 42%"></div>
+                        </div>
+                        <div class="chart-value">42% avg</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">pricing-api</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 35%"></div>
+                        </div>
+                        <div class="chart-value">35% avg</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">slackv2</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 53%"></div>
+                        </div>
+                        <div class="chart-value">53% avg</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Asset Reuse Analysis -->
+            <div class="section">
+                <h2>🔄 Asset Reuse & Optimization</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">7</div>
+                        <div class="metric-label">Total Mule Apps</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">28.6%</div>
+                        <div class="metric-label">Utilization Rate</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">0</div>
+                        <div class="metric-label">Reused Apps</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">5</div>
+                        <div class="metric-label">Unused Apps</div>
+                    </div>
+                </div>
+
+                <div class="alert">
+                    <strong>💡 Optimization Opportunity:</strong> 71.4% of deployed applications (5 out of 7) are currently unused. Consider reviewing the following applications for potential decommissioning or activation:
+                    <ul>
+                        <li>chain-llm-powered-data-ingestion</li>
+                        <li>mq-claims-agent</li>
+                        <li>rev-mgmt-api-impl</li>
+                        <li>revenue-management-v2-attempt2</li>
+                        <li>slackv2</li>
+                    </ul>
+                </div>
+
+                <div class="performance-chart">
+                    <h3>Application Usage Status</h3>
+                    <p><strong>Currently Active Applications (2):</strong></p>
+                    <ul>
+                        <li><strong>pricing-api:</strong> Single use - 3,685 messages processed</li>
+                        <li><strong>reservations-monitoring-example:</strong> Single use - 9,787 messages processed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="section">
+                <h2>💡 Recommendations & Action Items</h2>
+                
+                <div class="alert alert-danger">
+                    <h4>🚨 High Priority Issues:</h4>
+                    <ol>
+                        <li><strong>Investigate reservations-monitoring-example errors:</strong> 3,165 errors need immediate attention</li>
+                        <li><strong>Review stopped applications:</strong> 3 applications are currently stopped - determine if they should be restarted or decommissioned</li>
+                    </ol>
+                </div>
+
+                <div class="alert">
+                    <h4>📋 Medium Priority Optimizations:</h4>
+                    <ol>
+                        <li><strong>Application consolidation:</strong> Review 5 unused applications for potential decommissioning</li>
+                        <li><strong>Performance optimization:</strong> pricing-api shows higher latency (78.8ms) compared to reservations-monitoring-example (29.2ms)</li>
+                        <li><strong>Resource optimization:</strong> Consider right-sizing applications based on actual usage patterns</li>
+                    </ol>
+                </div>
+
+                <div class="alert alert-success">
+                    <h4>✅ Positive Observations:</h4>
+                    <ol>
+                        <li><strong>Healthy resource utilization:</strong> CPU and memory usage are within optimal ranges</li>
+                        <li><strong>Consistent runtime versions:</strong> All applications are on Mule 4.9.7:23e-java17</li>
+                        <li><strong>Geographic distribution:</strong> Good distribution across multiple regions</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Data Throughput Analysis -->
+            <div class="section">
+                <h2>📊 Data Throughput Analysis</h2>
+                <div class="performance-chart">
+                    <h3>Network Data Transfer (GB - Last Month)</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">reservations-monitoring-example</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 70%"></div>
+                        </div>
+                        <div class="chart-value">0.246 GB</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">pricing-api</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 30%"></div>
+                        </div>
+                        <div class="chart-value">0.104 GB</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">revenue-management-v2-attempt2</div>
+                        <div class="chart-progress">
+                            <div class="chart-fill" style="width: 28%"></div>
+                        </div>
+                        <div class="chart-value">0.101 GB</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timestamp">
+                Report generated on August 4, 2025 at 11:18 AM UTC<br>
+                Data covers: July 28 - August 4, 2025 (7-day period)<br>
+                Environment: [ORGANIZATION], Sandbox Environment
+            </div>
+        </div>
+    </div>
+</body>
+</html>
