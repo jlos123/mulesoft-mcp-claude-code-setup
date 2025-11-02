@@ -1,0 +1,63 @@
+# Mule Agent Configuration
+# This file configures the Mule runtime agent to communicate with Anypoint Platform
+
+# Agent version
+version: 2.4.0
+
+# Runtime Manager connection settings
+transports:
+  rest.agent.transport:
+    enabled: true
+    port: 9999
+
+  websocket.transport:
+    enabled: true
+    # Anypoint Platform URI
+    uri: wss://mule-manager.anypoint.mulesoft.com:443/mule
+
+# Services configuration
+services:
+  mule.agent.application.properties.service:
+    enabled: true
+
+  mule.agent.domain.properties.service:
+    enabled: true
+
+  mule.agent.jmx.publisher.service:
+    enabled: true
+    frequency: 15
+    frequencyTimeUnit: MINUTES
+
+  mule.agent.tracking.service:
+    enabled: true
+    
+  mule.agent.logging.service:
+    enabled: true
+
+# Internal handlers
+internalHandlers:
+  domaindeploymentrequest.internal.message.handler:
+    enabled: true
+
+  applicationdeploymentrequest.internal.message.handler:
+    enabled: true
+
+  application.request.handler:
+    enabled: true
+
+  domain.request.handler:
+    enabled: true
+
+# External message handlers
+externalHandlers:
+  applications.request.handler:
+    enabled: true
+
+  domains.request.handler:
+    enabled: true
+
+# Security configuration
+security:
+  keyStorePassword: changeme
+  keyStoreAlias: agent
+  keyStoreAliasPassword: changeme

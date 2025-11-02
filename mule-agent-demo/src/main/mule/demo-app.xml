@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <!-- HTTP Listener Configuration -->
+    <http:listener-config name="HTTP_Listener_config">
+        <http:listener-connection host="0.0.0.0" port="${http.port}"/>
+    </http:listener-config>
+
+    <!-- Health Check Flow -->
+    <flow name="health-check-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/health"/>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    status: "UP",
+    timestamp: now(),
+    application: p('application.name'),
+    version: p('application.version'),
+    environment: p('environment')
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+
+    <!-- Sample API Flow -->
+    <flow name="demo-api-flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/demo"/>
+        <logger level="INFO" message="Received request: #[attributes.requestPath]"/>
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    message: "Hello from Mule Agent Demo!",
+    timestamp: now(),
+    requestId: attributes.headers.'x-request-id' default uuid()
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+        <logger level="INFO" message="Response sent successfully"/>
+    </flow>
+
+    <!-- Error Handler -->
+    <error-handler name="global-error-handler">
+        <on-error-propagate type="ANY">
+            <logger level="ERROR" message="Error occurred: #[error.description]"/>
+            <ee:transform>
+                <ee:message>
+                    <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    error: true,
+    message: error.description,
+    timestamp: now()
+}]]></ee:set-payload>
+                </ee:message>
+            </ee:transform>
+        </on-error-propagate>
+    </error-handler>
+
+</mule>

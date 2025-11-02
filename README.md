@@ -30,6 +30,23 @@
    For different scopes available, see the documentation: https://docs.anthropic.com/en/docs/claude-code/mcp#choosing-the-right-scope
 
 
+# Demo Application
+
+Check out the **[mule-agent-demo](./mule-agent-demo/)** directory for a complete demonstration of:
+- Setting up a MuleSoft application with the Mule runtime agent
+- Using Claude Code with MuleSoft MCP Server to manage applications
+- Sample configurations and deployment scripts
+- Example use cases for health monitoring and deployments
+
+## Quick Start with Demo
+
+```bash
+cd mule-agent-demo
+# Review the README for setup instructions
+cat README.md
+```
+
+
 # Additional Resources
 
 Claude Code tutorial - https://www.youtube.com/watch?v=cYIxhL6pxL4&ab_channel=RobShocks

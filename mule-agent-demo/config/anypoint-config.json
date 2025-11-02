@@ -1,0 +1,38 @@
+{
+  "description": "Anypoint Platform Configuration for Mule Agent Demo",
+  "platform": {
+    "baseUrl": "https://anypoint.mulesoft.com",
+    "region": "PROD_US"
+  },
+  "connectedApp": {
+    "clientId": "YOUR_CLIENT_ID_HERE",
+    "clientSecret": "YOUR_CLIENT_SECRET_HERE",
+    "note": "Replace with your actual connected app credentials from Anypoint Platform"
+  },
+  "organization": {
+    "id": "YOUR_ORG_ID_HERE",
+    "name": "Your Organization Name"
+  },
+  "environment": {
+    "id": "YOUR_ENV_ID_HERE",
+    "name": "Sandbox",
+    "type": "sandbox"
+  },
+  "requiredScopes": [
+    "Read Applications",
+    "Write Applications",
+    "Read Assets",
+    "Read Servers",
+    "Write Servers",
+    "Read API Manager",
+    "Write API Manager"
+  ],
+  "notes": {
+    "setup": "To use this configuration:",
+    "step1": "Create a Connected App in Anypoint Platform",
+    "step2": "Add the required scopes listed above",
+    "step3": "Copy your client_id and client_secret",
+    "step4": "Update the values in this file",
+    "step5": "Use with Claude Code and MuleSoft MCP Server"
+  }
+}
